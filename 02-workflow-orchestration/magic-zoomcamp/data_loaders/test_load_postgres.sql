@@ -1,0 +1,1 @@
+SELECT * from mage.green_taxi LIMIT 3;

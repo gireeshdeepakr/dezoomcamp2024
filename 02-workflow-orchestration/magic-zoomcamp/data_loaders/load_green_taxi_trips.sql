@@ -1,0 +1,1 @@
+SELECT * FROM ny_taxi.green_taxi_trips LIMIT 10;
