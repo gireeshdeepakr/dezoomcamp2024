@@ -6,7 +6,7 @@ Data loader, loads data from the API "https://www.nyc.gov/site/tlc/about/tlc-tri
 
 Mage Data Loader, Python API block code
 -----------------------------------
-------------------------------------------------------------------------------
+```Python
 import io
 import pandas as pd
 import requests
@@ -49,12 +49,12 @@ def load_data_from_api(*args, **kwargs):
 @test
 def test_output(output, *args) -> None:
     assert output is not None, 'The output is undefined'
-
------------- Data Loader Python Block End -----------------
+```
 
 Mage Data Exporter Python GCS Block code
 --------------------------------------------
-------------------------------------------------------
+
+```Python
 import os
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -88,7 +88,7 @@ def export_data_to_google_cloud_storage(data, *args, **kwargs) -> None:
         filesystem=gcs
     )
 
----------------- Data Exporter Python Block End -----------------------
+```
 
 Created empty Dataset with name: "ny_green_taxi" in bigquery
 
