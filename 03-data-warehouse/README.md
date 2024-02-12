@@ -1,3 +1,147 @@
+Gireesh Deepak Rajangam Home work 3
+------------------------------------
+
+I used Mage to create a pipline with data loader and data exporter. 
+Data loader, loads data from the API "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page" in in a loop and returns the data to pipeline downstream data exporter in parquet format. Data exporter to export green taxi 2022 data to GCS bucket "mage-zoomcamp-gireesh-deepak-r/green_taxi_2022".
+
+Mage Data Loader, Python API block code
+-----------------------------------
+
+import io
+import pandas as pd
+import requests
+import pyarrow as pa
+import pyarrow.parquet as pq
+if 'data_loader' not in globals():
+    from mage_ai.data_preparation.decorators import data_loader
+if 'test' not in globals():
+    from mage_ai.data_preparation.decorators import test
+
+
+@data_loader
+def load_data_from_api(*args, **kwargs):
+    # Create a date range from 2022-01-01 to 2022-12-31 with day frequency
+    daterange = pd.date_range(start='2022-01-01', end='2022-12-31', freq='M')
+    #Initialize dataframe
+    dataframes = []
+    #Loop over the date range
+    for date in daterange:
+        year = date.year
+        month = date.strftime('%m')
+        # Construct the API end point url
+        api_url = f"https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month}.parquet"
+        #print(f"api url: {api_url}")
+        try:
+            response = requests.get(api_url)
+            response.raise_for_status()
+            data = io.BytesIO(response.content)
+            df = pq.read_table(data).to_pandas()
+    
+        except requests.HTTPError as e:
+            print(f"HTPP Error: {e}")
+
+        # Append the dataframe to the list
+        dataframes.append(df)
+    # Concatenate the dataframes into one
+    data = pd.concat(dataframes)
+    return data
+
+@test
+def test_output(output, *args) -> None:
+    assert output is not None, 'The output is undefined'
+
+------------ Data Loader Python Block End -----------------
+
+Mage Data Exporter Python GCS Block code
+--------------------------------------------
+
+import os
+import pyarrow as pa
+import pyarrow.parquet as pq
+from mage_ai.settings.repo import get_repo_path
+from mage_ai.io.config import ConfigFileLoader
+from mage_ai.io.google_cloud_storage import GoogleCloudStorage
+from pandas import DataFrame
+from os import path
+
+if 'data_exporter' not in globals():
+    from mage_ai.data_preparation.decorators import data_exporter
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/src/dezoomcamp2024.json"
+bucket_name = 'mage-zoomcamp-gireesh-deepak-r'
+project_id = 'vivid-partition-412012'
+table_name = 'green_taxi_2022'
+root_path = f'{bucket_name}/{table_name}'
+
+@data_exporter
+def export_data_to_google_cloud_storage(data, *args, **kwargs) -> None:
+    
+    config_path = path.join(get_repo_path(), 'io_config.yaml')
+    config_profile = 'default'
+
+    table = pa.Table.from_pandas(data)
+    gcs = pa.fs.GcsFileSystem()
+    
+    pq.write_to_dataset(
+        table,
+        root_path=root_path,
+        filesystem=gcs
+    )
+
+---------------- Data Exporter Python Block End -----------------------
+
+Created empty Dataset with name: "ny_green_taxi" in bigquery
+
+Following are Bigquery SQL statements
+----------------------------------------
+
+
+-- Creating external table referring to gcs path
+CREATE OR REPLACE EXTERNAL TABLE `vivid-partition-412012.ny_green_taxi.green_taxi_2022`
+OPTIONS(
+  format = 'PARQUET',
+  uris = ['gs://mage-zoomcamp-gireesh-deepak-r/green_taxi_2022/402aa13fa59544a2b64080d5962fdcb4-0.parquet']
+)
+
+-- Check green taxi 2022 trip data
+SELECT * FROM ny_green_taxi.green_taxi_2022 limit 10;
+
+-- Create a non partitioned non clustered table from external table
+CREATE OR REPLACE TABLE `vivid-partition-412012.ny_green_taxi.green_taxi_2022_non_partitioned_clustered` AS
+SELECT * FROM ny_green_taxi.green_taxi_2022;
+
+Home Work
+------------
+**Question 1:** What is count of records for the 2022 Green Taxi Data??
+**Ans:** Number of rows 840,402
+
+**Question 2:** Write a query to count the distinct number of PULocationIDs for the entire dataset on both the tables.
+What is the estimated amount of data that will be read when this query is executed on the External Table and the Table?
+**Ans:** 0 MB for the External Table and 6.41MB for the Materialized Table
+
+SELECT COUNT(DISTINCT PULocationID) AS unique_PULocationIDs
+FROM `vivid-partition-412012.ny_green_taxi.green_taxi_2022`
+
+SELECT COUNT(DISTINCT PULocationID) AS unique_PULocationIDs
+FROM `ny_green_taxi.green_taxi_2022_non_partitioned_clustered`
+
+
+**Question 3:** How many records have a fare_amount of 0?
+**Ans:** 1622
+
+SELECT COUNT(*) AS zero_fare_records
+FROM `vivid-partition-412012.ny_green_taxi.green_taxi_2022`
+WHERE fare_amount = 0
+
+SELECT COUNT(*) AS zero_fare_records
+FROM `vivid-partition-412012.ny_green_taxi.green_taxi_2022_non_partitioned_clustered`
+WHERE fare_amount = 0
+
+**Question 4:** What is the best strategy to make an optimized table in Big Query if your query will always order the results by PUlocationID and filter based on lpep_pickup_datetime? (Create a new table with this strategy)
+**Ans:** 
+
+
+
 # Data Warehouse and BigQuery
 
 - [Slides](https://docs.google.com/presentation/d/1a3ZoBAXFk8-EhUsd7rAZd-5p_HpltkzSeujjRGB2TAI/edit?usp=sharing)  
