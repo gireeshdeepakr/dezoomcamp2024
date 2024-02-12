@@ -6,7 +6,7 @@ Data loader, loads data from the API "https://www.nyc.gov/site/tlc/about/tlc-tri
 
 Mage Data Loader, Python API block code
 -----------------------------------
-
+------------------------------------------------------------------------------
 import io
 import pandas as pd
 import requests
@@ -54,7 +54,7 @@ def test_output(output, *args) -> None:
 
 Mage Data Exporter Python GCS Block code
 --------------------------------------------
-
+------------------------------------------------------
 import os
 import pyarrow as pa
 import pyarrow.parquet as pq
