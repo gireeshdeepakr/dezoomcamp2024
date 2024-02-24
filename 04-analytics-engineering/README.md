@@ -1,3 +1,41 @@
+Gireesh Deepak Rajangam Homework
+--------------------------------
+
+Ingested Yellow and Green 2019 & 2020, and fhv 2019 data into GCS using Python script located at https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/03-data-warehouse/extras/web_to_gcs.py 
+
+  
+
+
+
+Created Bigquery tables using below SQL queries 
+```sql
+-- Creating external table referring to gcs path for Green 2019 and 2020 
+CREATE OR REPLACE EXTERNAL TABLE `vivid-partition-412012.trips_data_all.green_2019_2020_external_table` 
+OPTIONS( 
+    format = 'PARQUET', 
+    uris = ['gs://mage-zoomcamp-gireesh-deepak-r/green_final/*.parquet'] 
+    )
+
+```sql
+--Check External Green table
+SELECT * FROM trips_data_all.green_2019_2020_external_table limit 10;
+
+```sql
+-- Creating a green_tripdata table from Green external table
+CREATE OR REPLACE TABLE `vivid-partition-412012.trips_data_all.green_tripdata`
+PARTITION BY DATE(lpep_pickup_datetime)
+CLUSTER BY PUlocationID AS
+SELECT * FROM `trips_data_all.green_2019_2020_external_table`;
+
+```sql
+-- Check green_tripdata
+SELECT * FROM trips_data_all.green_tripdata LIMIT 10;
+
+
+
+
+
+
 # Week 4: Analytics Engineering 
 Goal: Transforming the data loaded in DWH to Analytical Views developing a [dbt project](taxi_rides_ny/README.md).
 [Slides](https://docs.google.com/presentation/d/1xSll_jv0T8JF4rYZvLHfkJXYqUjPtThA/edit?usp=sharing&ouid=114544032874539580154&rtpof=true&sd=true)
