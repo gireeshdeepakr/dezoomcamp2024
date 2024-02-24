@@ -1,5 +1,12 @@
 Gireesh Deepak Rajangam Homework
 --------------------------------
+```sql
+dbt build --select fact_fhv_trips --vars '{'is_test_run': 'false'}'
+20:08:59 1 of 1 START sql table model dbt_grajangam.fact_fhv_trips ...................... [RUN]
+20:09:07 1 of 1 OK created sql table model dbt_grajangam.fact_fhv_trips ................. [CREATE TABLE (17.9m rows, 1.6 GiB processed) in 7.73s]
+```
+
+
 
 ```sql
 dbt build --select +fact_trips+ --vars '{'is_test_run': 'false'}'   ----   
