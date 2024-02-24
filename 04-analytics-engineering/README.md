@@ -33,7 +33,29 @@ SELECT * FROM `trips_data_all.green_2019_2020_external_table`;
 SELECT * FROM trips_data_all.green_tripdata LIMIT 10;
 ```
 
-
+```sql
+-- Create Yellow external table for 2019 and 2020
+CREATE OR REPLACE EXTERNAL TABLE `vivid-partition-412012.trips_data_all.yellow_2019_2020_external_table` 
+OPTIONS( 
+    format = 'PARQUET', 
+    uris = ['gs://mage-zoomcamp-gireesh-deepak-r/yellow_final/*.parquet'] 
+    )
+```
+```sql
+-- Check yellow external table
+SELECT * FROM trips_data_all.yellow_2019_2020_external_table limit 10;
+```
+```sql
+-- Creating a yellow_tripdata table
+CREATE OR REPLACE TABLE `vivid-partition-412012.trips_data_all.yellow_tripdata`
+PARTITION BY DATE(tpep_pickup_datetime)
+CLUSTER BY PUlocationID AS
+SELECT * FROM `trips_data_all.yellow_2019_2020_external_table`;
+```
+```sql
+-- Check yellow_tripdata table
+SELECT * FROM trips_data_all.yellow_tripdata LIMIT 10;
+```
 
 
 
