@@ -1,6 +1,8 @@
 Gireesh Deepak Rajangam Homework
 --------------------------------
 
+dbt generate_surrogate_key link https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#generate_surrogate_key-source 
+
 Ingested Yellow and Green 2019 & 2020, and fhv 2019 data into GCS using Python script located at https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/03-data-warehouse/extras/web_to_gcs.py 
 
   
