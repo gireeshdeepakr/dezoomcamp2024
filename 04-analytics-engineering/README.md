@@ -15,22 +15,23 @@ OPTIONS(
     format = 'PARQUET', 
     uris = ['gs://mage-zoomcamp-gireesh-deepak-r/green_final/*.parquet'] 
     )
+```
 
 ```sql
 --Check External Green table
 SELECT * FROM trips_data_all.green_2019_2020_external_table limit 10;
-
+```
 ```sql
 -- Creating a green_tripdata table from Green external table
 CREATE OR REPLACE TABLE `vivid-partition-412012.trips_data_all.green_tripdata`
 PARTITION BY DATE(lpep_pickup_datetime)
 CLUSTER BY PUlocationID AS
 SELECT * FROM `trips_data_all.green_2019_2020_external_table`;
-
+```
 ```sql
 -- Check green_tripdata
 SELECT * FROM trips_data_all.green_tripdata LIMIT 10;
-
+```
 
 
 
