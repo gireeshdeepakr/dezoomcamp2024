@@ -81,6 +81,21 @@ SELECT * FROM `trips_data_all.fhv_2019_external_table`;
 SELECT * FROM trips_data_all.fhv_tripdata LIMIT 10;
 ```
 
+**Question1**:
+dbt build  ----  default limit is 100
+dbt build --select <model_name> --vars '{'is_test_run': 'false'}'  -- no limit for this build
+dbt build --vars '{'is_test_run':'true'}'  --- limit is 100
+
+```sql
+-- dbt build --select <model_name> --vars '{'is_test_run': 'false'}'
+{% if var('is_test_run', default=true) %}
+
+  limit 100
+
+{% endif %}
+```
+
+
 
 
 # Week 4: Analytics Engineering 
