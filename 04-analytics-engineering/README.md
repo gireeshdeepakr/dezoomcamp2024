@@ -1,5 +1,22 @@
 Gireesh Deepak Rajangam Homework
 --------------------------------
+
+Tripdata count
+```sql
+SELECT COUNT(tripid) AS num_trips
+FROM dbt_grajangam.stg_yellow_tripdata;
+
+56100630
+
+SELECT COUNT(tripid) AS num_trips
+FROM dbt_grajangam.stg_green_tripdata;
+
+SELECT COUNT(tripid) AS num_trips
+FROM dbt_grajangam.stg_fhv_tripdata;
+37187003
+```
+
+
 ```sql
 dbt build --select fact_fhv_trips --vars '{'is_test_run': 'false'}'
 20:08:59 1 of 1 START sql table model dbt_grajangam.fact_fhv_trips ...................... [RUN]
