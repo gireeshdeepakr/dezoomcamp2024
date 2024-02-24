@@ -94,6 +94,9 @@ dbt build --vars '{'is_test_run':'true'}'  --- limit is 100
 
 {% endif %}
 ```
+**Question2**
+What is the code that our CI job will run? Where is this code coming from?
+Ans: The code from any development branch that has been opened based on main
 
 
 
