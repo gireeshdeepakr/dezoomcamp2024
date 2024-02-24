@@ -57,6 +57,28 @@ SELECT * FROM `trips_data_all.yellow_2019_2020_external_table`;
 SELECT * FROM trips_data_all.yellow_tripdata LIMIT 10;
 ```
 
+```sql
+-- Create fhv 2019 external table
+CREATE OR REPLACE EXTERNAL TABLE `vivid-partition-412012.trips_data_all.fhv_2019_external_table` 
+OPTIONS( 
+    format = 'PARQUET', 
+    uris = ['gs://mage-zoomcamp-gireesh-deepak-r/fhv_final/*.parquet'] 
+    )
+
+-- Check fhv 2019 external table
+SELECT * FROM trips_data_all.fhv_2019_external_table LIMIT 10;
+
+-- Creating a fhv_tripdata table
+CREATE OR REPLACE TABLE `vivid-partition-412012.trips_data_all.fhv_tripdata`
+PARTITION BY DATE(pickup_datetime)
+CLUSTER BY PUlocationID AS
+SELECT * FROM `trips_data_all.fhv_2019_external_table`;
+
+
+--Check fhv_tripdata table
+SELECT * FROM trips_data_all.fhv_tripdata LIMIT 10;
+```
+
 
 
 # Week 4: Analytics Engineering 
