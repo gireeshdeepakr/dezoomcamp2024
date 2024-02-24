@@ -1,6 +1,14 @@
 Gireesh Deepak Rajangam Homework
 --------------------------------
 
+```sql
+dbt build --select +fact_trips+ --vars '{'is_test_run': 'false'}'   ----   
+20:07:13 5 of 5 START sql table model dbt_grajangam.fact_trips .......................... [RUN]
+20:07:26 5 of 5 OK created sql table model dbt_grajangam.fact_trips ..................... [CREATE TABLE (61.5m rows, 14.2 GiB processed) in 12.63s]
+```
+
+
+
 dbt generate_surrogate_key link https://github.com/dbt-labs/dbt-utils?tab=readme-ov-file#generate_surrogate_key-source 
 
 Ingested Yellow and Green 2019 & 2020, and fhv 2019 data into GCS using Python script located at https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/03-data-warehouse/extras/web_to_gcs.py 
