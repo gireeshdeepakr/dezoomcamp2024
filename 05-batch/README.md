@@ -18,9 +18,15 @@ du -sh /tmp/fhv_tripdata_2019-10/*
 ```
 Question 3. Count records on 15th of October 
 Ans: 62,610
+
 Question 4. The longest trip
 Ans: 631,152.50 Hours
 
+Question 5. Spark UI port 
+Ans: 4040
+
+Question 6. Least frequent pickup location zone
+Ans: Jamaica Bay
 
 # Week 5: Batch Processing
 
