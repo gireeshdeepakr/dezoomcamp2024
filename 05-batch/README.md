@@ -16,7 +16,10 @@ du -sh /tmp/fhv_tripdata_2019-10/*
 6.2M    /tmp/fhv_tripdata_2019-10/part-00005-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
 0       /tmp/fhv_tripdata_2019-10/_SUCCESS
 ```
-
+Question 3. Count records on 15th of October 
+Ans: 62,610
+Question 4. The longest trip
+Ans: 631,152.50 Hours
 
 
 # Week 5: Batch Processing
