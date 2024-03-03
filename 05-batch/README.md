@@ -1,3 +1,24 @@
+Gireesh Deepak Rajangam Homework5
+----------------------------------
+
+Question 1: spark.version
+Ans: '3.5.1'
+
+Question 2: Question 2. FHV October 2019 partition size (1 point)
+Ans: '6.2 M'
+```bash
+du -sh /tmp/fhv_tripdata_2019-10/*
+6.2M    /tmp/fhv_tripdata_2019-10/part-00000-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+6.2M    /tmp/fhv_tripdata_2019-10/part-00001-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+6.2M    /tmp/fhv_tripdata_2019-10/part-00002-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+6.2M    /tmp/fhv_tripdata_2019-10/part-00003-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+6.2M    /tmp/fhv_tripdata_2019-10/part-00004-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+6.2M    /tmp/fhv_tripdata_2019-10/part-00005-8c597918-b7fc-480c-915d-869a67f72f83-c000.snappy.parquet
+0       /tmp/fhv_tripdata_2019-10/_SUCCESS
+```
+
+
+
 # Week 5: Batch Processing
 
 ## 5.1 Introduction
